@@ -1,7 +1,6 @@
 <template>
   <main class="home">
-    <h1>Was koche ich heute?</h1>
-    <p>Beantworte ein paar Fragen und finde das passende Rezept für dich!</p>
+    <h1>Die 15 Minuten</h1>
   </main>
 </template>
 
@@ -11,9 +10,8 @@
 }
 
 h1 {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 800;
-  line-height: 1.15;
   color: var(--color-heading);
 }
 </style>
