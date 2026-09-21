@@ -1,6 +1,7 @@
 <template>
   <main class="home">
     <h1>Was koche ich heute?</h1>
+    <p>Beantworte ein paar Fragen und finde das passende Rezept für dich!</p>
   </main>
 </template>
 
