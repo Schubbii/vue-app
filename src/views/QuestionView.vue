@@ -1,11 +1,11 @@
 <template>
-  <main class="home">
+  <main class="question">
     <h1>Was koche ich heute?</h1>
   </main>
 </template>
 
 <style scoped>
-.home {
+.question {
   padding-top: 3rem;
 }
 
