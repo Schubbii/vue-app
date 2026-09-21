@@ -10,17 +10,17 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path: '/fragen',
+      path: '/questions',
       name: 'questions',
       component: () => import('../views/QuestionView.vue'),
     },
     {
-      path: '/rezepte',
+      path: '/recipes',
       name: 'recipes',
       component: () => import('../views/RecipeView.vue'),
     },
     {
-      path: '/rezepte/:id',
+      path: '/recipes/:id',
       name: 'recipe-detail',
       component: () => import('../views/RecipeDetailView.vue'),
     },

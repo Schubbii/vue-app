@@ -1,6 +1,6 @@
 <template>
   <main class="home">
-    <h1>Die 15 Minuten</h1>
+    <h1>The 15 Minutes</h1>
   </main>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
   <main class="question">
-    <h1>Was koche ich heute?</h1>
+    <h1>What should I cook today?</h1>
   </main>
 </template>
 
