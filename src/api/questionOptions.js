@@ -1,27 +1,27 @@
-// Wiederkehrende Fragen (Building Block). `param` sagt, welchen
-// API-Filter die Antwort steuert; value null = "Egal" (kein Filter).
+// Recurring questions (Building Block). `param` tells which API filter
+// the answer controls; value null = "Any" (no filter).
 export const questions = [
   {
     id: 'diet',
-    label: 'Wie soll es sein?',
+    label: 'What kind of dish?',
     param: 'category',
     options: [
-      { label: 'Vegetarisch', value: 'Vegetarian' },
+      { label: 'Vegetarian', value: 'Vegetarian' },
       { label: 'Vegan', value: 'Vegan' },
-      { label: 'Fleisch', value: 'Beef' },
-      { label: 'Hähnchen', value: 'Chicken' },
-      { label: 'Egal', value: null },
+      { label: 'Beef', value: 'Beef' },
+      { label: 'Chicken', value: 'Chicken' },
+      { label: 'Any', value: null },
     ],
   },
   {
     id: 'cuisine',
-    label: 'Worauf hast du Lust?',
+    label: 'What are you craving?',
     param: 'area',
     options: [
-      { label: 'Italienisch', value: 'Italian' },
-      { label: 'Asiatisch', value: 'Japanese' },
-      { label: 'Amerikanisch', value: 'American' },
-      { label: 'Egal', value: null },
+      { label: 'Italian', value: 'Italian' },
+      { label: 'Japanese', value: 'Japanese' },
+      { label: 'American', value: 'American' },
+      { label: 'Any', value: null },
     ],
   },
 ]
