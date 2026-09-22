@@ -16,12 +16,20 @@ export function getIngredients(meal) {
 
 /**
  * Splits strInstructions into single steps (at line breaks).
- * Leading numbers like "2." or "3)" are stripped – some meals already
- * contain them, which would double up with an <ol>.
+ * The data is inconsistent, so we normalize a few patterns that would
+ * otherwise double up with an <ol>:
+ *   - leading numbers like "2." or "3)" are stripped
+ *   - "STEP 1" / "Step 2:" prefixes are stripped
+ *   - lines that consist only of "STEP n" are dropped
  */
 export function getInstructionSteps(meal) {
   return (meal.strInstructions ?? '')
     .split(/\r?\n+/)
-    .map((step) => step.trim().replace(/^\d+[.)]\s*/, ''))
+    .map((step) =>
+      step
+        .trim()
+        .replace(/^step\s*\d+\s*[:.)-]?\s*/i, '')
+        .replace(/^\d+[.)]\s*/, ''),
+    )
     .filter((step) => step.length > 0)
 }

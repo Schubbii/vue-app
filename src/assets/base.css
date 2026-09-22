@@ -38,6 +38,13 @@
   --color-accent: #e67e22;
   --color-accent-soft: rgba(230, 126, 34, 0.15);
 
+  --color-accent-hover: #cf6d17;
+
+  --radius-md: 0.75rem;
+  --radius-lg: 1.25rem;
+  --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.06);
+  --shadow-card-hover: 0 12px 28px rgba(0, 0, 0, 0.12);
+
   --section-gap: 160px;
 }
 
@@ -53,6 +60,9 @@
     --color-heading: var(--vt-c-text-dark-1);
     --color-text: var(--vt-c-text-dark-2);
     --color-text-muted: rgba(235, 235, 235, 0.5);
+
+    --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.4);
+    --shadow-card-hover: 0 12px 28px rgba(0, 0, 0, 0.55);
   }
 }
 

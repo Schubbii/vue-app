@@ -1,46 +1,29 @@
 <script setup>
-import { ref } from "vue";
-import QuestionView from "./views/QuestionView.vue";
-import RecipeView from "./views/RecipeView.vue";
-import RecipeDetailView from "./views/RecipeDetailView.vue";
-
-const currentView = ref(QuestionView);
-const selectedCuisine = ref(null);
-const selectedType = ref(null);
-
-function finishQuestions(data) {
-  selectedCuisine.value = data.cuisine;
-  selectedType.value = data.type;
-  currentView.value = RecipeView;
-}
+import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 <template>
   <header class="site-header">
-    <div class="brand">
+    <RouterLink to="/" class="brand">
       <span class="brand-icon">🍳</span>
-      <span class="brand-name">Die 15 Minuten</span>
-    </div>
+      <span class="brand-name">The 15 Minutes</span>
+    </RouterLink>
+
+    <nav class="site-nav">
+      <RouterLink to="/">Home</RouterLink>
+      <RouterLink to="/questions">Questions</RouterLink>
+      <RouterLink to="/recipes">Recipes</RouterLink>
+      <RouterLink to="/about">About</RouterLink>
+    </nav>
   </header>
 
-  <main>
-    <KeepAlive>
-      <component
-        :is="currentView"
-        :cuisine="selectedCuisine"
-        :type="selectedType"
-        @finished="finishQuestions"
-      />
-    </KeepAlive>
-  </main>
+  <RouterView />
 
   <footer class="site-footer">
     <p>Team Building Blocks · Silas, Richard, Levin, Kira</p>
     <p>
-      Rezeptdaten von
-      <a href="https://www.themealdb.com/" target="_blank" rel="noopener"
-        >TheMealDB</a
-      >
+      Recipe data by
+      <a href="https://www.themealdb.com/" target="_blank" rel="noopener">TheMealDB</a>
     </p>
   </footer>
 </template>
@@ -72,6 +55,29 @@ function finishQuestions(data) {
   font-size: 1.5rem;
 }
 
+.site-nav {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.site-nav a {
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  color: var(--color-text);
+}
+
+.site-nav a:hover {
+  text-decoration: none;
+  background-color: var(--color-background-soft);
+}
+
+/* "/recipes" stays highlighted on "/recipes/123", but "/" only on exact match */
+.site-nav a.router-link-active:not([href='/']),
+.site-nav a.router-link-exact-active {
+  background-color: var(--color-accent-soft);
+  color: var(--color-accent);
+}
+
 .site-footer {
   margin-top: 4rem;
   padding: 1.5rem 0;
@@ -82,5 +88,16 @@ function finishQuestions(data) {
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 0.5rem;
+}
+
+@media (max-width: 600px) {
+  .site-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .site-nav {
+    flex-wrap: wrap;
+  }
 }
 </style>
