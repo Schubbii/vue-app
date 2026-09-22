@@ -1,4 +1,6 @@
 <script setup>
+import BuildingBlockCard from "./BuildingBlockCard.vue";
+
 defineProps({
   title: String,
   image: String,
