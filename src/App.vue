@@ -6,14 +6,14 @@ import { RouterLink, RouterView } from 'vue-router'
   <header class="site-header">
     <RouterLink to="/" class="brand">
       <span class="brand-icon">🍳</span>
-      <span class="brand-name">Die 15 Minuten</span>
+      <span class="brand-name">The 15 Minutes</span>
     </RouterLink>
 
     <nav class="site-nav">
-      <RouterLink to="/">Start</RouterLink>
-      <RouterLink to="/fragen">Fragen</RouterLink>
-      <RouterLink to="/rezepte">Rezepte</RouterLink>
-      <RouterLink to="/about">Über uns</RouterLink>
+      <RouterLink to="/">Home</RouterLink>
+      <RouterLink to="/questions">Questions</RouterLink>
+      <RouterLink to="/recipes">Recipes</RouterLink>
+      <RouterLink to="/about">About</RouterLink>
     </nav>
   </header>
 
@@ -22,7 +22,7 @@ import { RouterLink, RouterView } from 'vue-router'
   <footer class="site-footer">
     <p>Team Building Blocks · Silas, Richard, Levin, Kira</p>
     <p>
-      Rezeptdaten von
+      Recipe data by
       <a href="https://www.themealdb.com/" target="_blank" rel="noopener">TheMealDB</a>
     </p>
   </footer>
