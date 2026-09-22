@@ -1,6 +1,6 @@
 <template>
   <main class="recipes">
-    <h1>Rezepte</h1>
+    <h1>Recipes</h1>
   </main>
 </template>
 
