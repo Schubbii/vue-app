@@ -5,6 +5,7 @@ import QuestionCardContent from "../components/QuestionCardContent.vue";
 const currentStep = ref(1);
 const selectedCuisine = ref(null);
 const selectedType = ref(null);
+const emit = defineEmits(["finished"]);
 
 function selectCuisine(cuisine) {
   selectedCuisine.value = cuisine;
@@ -13,7 +14,11 @@ function selectCuisine(cuisine) {
 
 function selectType(type) {
   selectedType.value = type;
-  currentStep.value = 3;
+
+  emit("finished", {
+    cuisine: selectedCuisine.value,
+    type: selectedType.value,
+  });
 }
 </script>
 
