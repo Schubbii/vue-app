@@ -20,7 +20,7 @@ function finishQuestions(data) {
     <div class="brand">
       <span class="brand-icon">🍳</span>
       <span class="brand-name">The 15 Minutes</span>
-    </RouterLink>
+    </div>
 
     <nav class="site-nav">
       <RouterLink to="/">Home</RouterLink>
@@ -45,7 +45,9 @@ function finishQuestions(data) {
     <p>Team Building Blocks · Silas, Richard, Levin, Kira</p>
     <p>
       Recipe data by
-      <a href="https://www.themealdb.com/" target="_blank" rel="noopener">TheMealDB</a>
+      <a href="https://www.themealdb.com/" target="_blank" rel="noopener"
+        >TheMealDB</a
+      >
     </p>
   </footer>
 </template>
