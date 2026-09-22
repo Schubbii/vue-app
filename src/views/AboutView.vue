@@ -3,7 +3,7 @@
     <h1>About</h1>
     <p class="lead">
       Every evening the same question: what should we cook? To avoid ending up at
-      the drive-through, <strong>The 15 Minutes</strong> takes the decision off your
+      the drive-through, <strong></strong> takes the decision off your
       hands and suggests quick, simple and tasty dishes.
     </p>
     <p class="lead">
