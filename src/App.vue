@@ -6,7 +6,7 @@ import { RouterLink, RouterView } from 'vue-router'
   <header class="site-header">
     <RouterLink to="/" class="brand">
       <span class="brand-icon">🍳</span>
-      <span class="brand-name"></span>
+      <span class="brand-name">Food Finder</span>
     </RouterLink>
 
     <nav class="site-nav">
