@@ -5,7 +5,7 @@ import { RouterLink } from 'vue-router'
 <template>
   <main class="home">
     <section class="hero">
-      <p class="eyebrow">The 15 Minutes</p>
+      <p class="eyebrow"></p>
       <h1>What should I cook today?</h1>
       <p class="lead">
         Every evening the same question. Answer two quick ones instead and get
