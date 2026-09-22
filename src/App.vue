@@ -19,8 +19,15 @@ function finishQuestions(data) {
   <header class="site-header">
     <div class="brand">
       <span class="brand-icon">🍳</span>
-      <span class="brand-name">Die 15 Minuten</span>
+      <span class="brand-name">The 15 Minutes</span>
     </div>
+
+    <nav class="site-nav">
+      <RouterLink to="/">Home</RouterLink>
+      <RouterLink to="/questions">Questions</RouterLink>
+      <RouterLink to="/recipes">Recipes</RouterLink>
+      <RouterLink to="/about">About</RouterLink>
+    </nav>
   </header>
 
   <main>
@@ -37,10 +44,8 @@ function finishQuestions(data) {
   <footer class="site-footer">
     <p>Team Building Blocks · Silas, Richard, Levin, Kira</p>
     <p>
-      Rezeptdaten von
-      <a href="https://www.themealdb.com/" target="_blank" rel="noopener"
-        >TheMealDB</a
-      >
+      Recipe data by
+      <a href="https://www.themealdb.com/" target="_blank" rel="noopener">TheMealDB</a>
     </p>
   </footer>
 </template>
