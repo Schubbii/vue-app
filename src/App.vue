@@ -20,7 +20,7 @@ function finishQuestions(data) {
     <div class="brand">
       <span class="brand-icon">🍳</span>
       <span class="brand-name">The 15 Minutes</span>
-    </RouterLink>
+    </div>
 
     <nav class="site-nav">
       <RouterLink to="/">Home</RouterLink>
