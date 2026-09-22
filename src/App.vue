@@ -1,10 +1,23 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { ref } from "vue";
+import QuestionView from "./views/QuestionView.vue";
+import RecipeView from "./views/RecipeView.vue";
+import RecipeDetailView from "./views/RecipeDetailView.vue";
+
+const currentView = ref(QuestionView);
+const selectedCuisine = ref(null);
+const selectedType = ref(null);
+
+function finishQuestions(data) {
+  selectedCuisine.value = data.cuisine;
+  selectedType.value = data.type;
+  currentView.value = RecipeView;
+}
 </script>
 
 <template>
   <header class="site-header">
-    <RouterLink to="/" class="brand">
+    <div class="brand">
       <span class="brand-icon">🍳</span>
       <span class="brand-name">The 15 Minutes</span>
     </RouterLink>
@@ -17,7 +30,16 @@ import { RouterLink, RouterView } from 'vue-router'
     </nav>
   </header>
 
-  <RouterView />
+  <main>
+    <KeepAlive>
+      <component
+        :is="currentView"
+        :cuisine="selectedCuisine"
+        :type="selectedType"
+        @finished="finishQuestions"
+      />
+    </KeepAlive>
+  </main>
 
   <footer class="site-footer">
     <p>Team Building Blocks · Silas, Richard, Levin, Kira</p>
@@ -53,27 +75,6 @@ import { RouterLink, RouterView } from 'vue-router'
 
 .brand-icon {
   font-size: 1.5rem;
-}
-
-.site-nav {
-  display: flex;
-  gap: 0.25rem;
-}
-
-.site-nav a {
-  padding: 0.4rem 0.8rem;
-  border-radius: 999px;
-  color: var(--color-text);
-}
-
-.site-nav a:hover {
-  text-decoration: none;
-  background-color: var(--color-background-soft);
-}
-
-.site-nav a.router-link-exact-active {
-  background-color: var(--color-accent-soft);
-  color: var(--color-accent);
 }
 
 .site-footer {
