@@ -39,6 +39,39 @@ export async function filterByArea(area) {
   return request(`filter.php?a=${encodeURIComponent(area)}`)
 }
 
+/**
+ * A general list of meals when no filter is set (search with empty query).
+ * Returns full Meal objects.
+ */
+export async function browseMeals() {
+  return request('search.php?s=')
+}
+
+/**
+ * Finds meals for the question flow. Both filters are optional.
+ * v1 supports only one filter per request, so for category + area we
+ * fetch both lists and intersect them by idMeal. Falls back to the
+ * category-only list when the intersection is empty, and to browseMeals()
+ * when nothing is selected.
+ *
+ * @param {{ category?: string|null, area?: string|null }} filters
+ * @returns {Promise<MealPreview[]>}
+ */
+export async function findMeals({ category = null, area = null } = {}) {
+  if (category && area) {
+    const [byCategory, byArea] = await Promise.all([
+      filterByCategory(category),
+      filterByArea(area),
+    ])
+    const areaIds = new Set(byArea.map((meal) => meal.idMeal))
+    const both = byCategory.filter((meal) => areaIds.has(meal.idMeal))
+    return both.length > 0 ? both : byCategory
+  }
+  if (category) return filterByCategory(category)
+  if (area) return filterByArea(area)
+  return browseMeals()
+}
+
 /** All categories as an array of strings, e.g. ["Beef", "Vegetarian", …]. */
 export async function listCategories() {
   const items = await request('list.php?c=list')
