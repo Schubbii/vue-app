@@ -1,67 +1,108 @@
 <script setup>
-import { ref } from "vue";
-import QuestionCardContent from "../components/QuestionCardContent.vue";
+import { computed, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import QuestionCardContent from '../components/QuestionCardContent.vue'
+import { questions } from '../api/questionOptions'
 
-const currentStep = ref(1);
-const selectedCuisine = ref(null);
-const selectedType = ref(null);
-const emit = defineEmits(["finished"]);
+const router = useRouter()
 
-function selectCuisine(cuisine) {
-  selectedCuisine.value = cuisine;
-  currentStep.value = 2;
+const stepIndex = ref(0)
+const answers = ref({}) // e.g. { area: 'Italian', category: null }
+
+const currentQuestion = computed(() => questions[stepIndex.value])
+const isLastStep = computed(() => stepIndex.value === questions.length - 1)
+
+function select(value) {
+  answers.value = { ...answers.value, [currentQuestion.value.param]: value }
+
+  if (isLastStep.value) {
+    finish()
+  } else {
+    stepIndex.value++
+  }
 }
 
-function selectType(type) {
-  selectedType.value = type;
+function back() {
+  if (stepIndex.value > 0) stepIndex.value--
+}
 
-  emit("finished", {
-    cuisine: selectedCuisine.value,
-    type: selectedType.value,
-  });
+function finish() {
+  // Only pass filters that are actually set → clean URLs like /recipes?area=Italian
+  const query = Object.fromEntries(
+    Object.entries(answers.value).filter(([, value]) => value != null),
+  )
+  router.push({ name: 'recipes', query })
 }
 </script>
 
 <template>
-  <div v-if="currentStep === 1">
-    <h1>Cuisine?</h1>
+  <main class="question-view">
+    <header class="question-header">
+      <p class="progress">Question {{ stepIndex + 1 }} of {{ questions.length }}</p>
+      <h1>{{ currentQuestion.label }}</h1>
+    </header>
 
-    <div class="card-container">
+    <div class="card-grid">
       <QuestionCardContent
-        title="Italian Cuisine"
-        image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRdDvE0dZY8P2bWSHV8kYN6KE__Bfc1XALG2YEoTnpHg&s=10"
-        description="Pasta, pizza and gelato!"
-        @select="selectCuisine('Italian Cuisine')"
+        v-for="option in currentQuestion.options"
+        :key="option.label"
+        :title="option.label"
+        :image="option.image"
+        :description="option.description"
+        :active="answers[currentQuestion.param] === option.value"
+        @select="select(option.value)"
       />
     </div>
-     <div class="card-container">
-      <QuestionCardContent
-        title="Asian Cuisine"
-        image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVi-V8SMJfM4mBfnAXyL9HVfvvV8gtY0hjqgCoF1bamw&s=10"
-        description="Rice, noodles and spices!"
-        @select="selectCuisine('Asian Cuisine')"
-      />
-    </div>
-  </div>
 
-  <div v-if="currentStep === 2">
-    <h1>Meat or Vegetarian?</h1>
-
-    <div class="card-container">
-      <QuestionCardContent
-        title="Meat"
-        image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUtStFf1-fHsTkuHuE8yo2TTbXwSrrh6f27KaeFQ9qVw&s=10"
-        description="Meat, stakes and sausages!"
-        @select="selectType('Meat')"
-      />
+    <div class="question-footer">
+      <button v-if="stepIndex > 0" type="button" class="link-button" @click="back">
+        ← Back
+      </button>
     </div>
-    <div class="card-container">
-      <QuestionCardContent
-        title="Vegetarian"
-        image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStZNPUP3lDmlKsX2RYalOuFgD5f4_UVMYP5NECj3kRbQ&s=10"
-        description="Fresh vegetables and plant-based proteins!"
-        @select="selectType('Vegetarian')"
-      />
-    </div>
-  </div>
+  </main>
 </template>
+
+<style scoped>
+.question-view {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding-top: 3rem;
+}
+
+.progress {
+  color: var(--color-accent);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+h1 {
+  font-size: clamp(1.8rem, 5vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--color-heading);
+  margin-top: 0.25rem;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.25rem;
+}
+
+.link-button {
+  border: 0;
+  background: none;
+  padding: 0;
+  font: inherit;
+  font-weight: 600;
+  color: var(--color-accent);
+  cursor: pointer;
+}
+
+.link-button:hover {
+  text-decoration: underline;
+}
+</style>

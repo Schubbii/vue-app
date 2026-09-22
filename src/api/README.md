@@ -20,6 +20,8 @@ import {
   searchMeals,       // (query) => Meal[]
   filterByCategory,  // (category) => MealPreview[]
   filterByArea,      // (area) => MealPreview[]
+  findMeals,         // ({ category?, area? }) => MealPreview[]  ← use this for the question flow
+  browseMeals,       // () => Meal[]   a general selection when nothing is filtered
   listCategories,    // () => string[]   e.g. ["Beef", "Vegetarian", …]
   listAreas,         // () => string[]   e.g. ["Italian", "Japanese", …]
 } from '@/api/mealApi'
@@ -90,7 +92,7 @@ watch(() => route.params.id, load, { immediate: true })
 <template>
   <p v-if="loading">Loading…</p>
   <p v-else-if="error">{{ error }}</p>
-  <RecipeDetailContent v-else-if="meal" :meal="meal" />
+  <RecipeDetailCard v-else-if="meal" :meal="meal" />
 </template>
 ```
 
@@ -113,28 +115,27 @@ const steps = computed(() => getInstructionSteps(props.meal))
 
 ## Question flow → API filter
 
-`questionOptions.js` maps answers to filter values:
+`questionOptions.js` holds the questions. Each option has `label`, `value`, `description`
+and `image`; `value: null` means "Surprise me" → no filter.
+
+The answers travel as URL query to the recipe list, so the list is shareable
+and the back button works:
 
 ```js
-{ id: 'diet',    param: 'category', options: [{ label: 'Vegetarian', value: 'Vegetarian' }, …] }
-{ id: 'cuisine', param: 'area',     options: [{ label: 'Italian',    value: 'Italian' }, …] }
+// QuestionView – when the last question is answered
+router.push({ name: 'recipes', query: { area: 'Italian', category: 'Pasta' } })
+
+// RecipeView – read the query and load
+const meals = await findMeals({ area: route.query.area, category: route.query.category })
 ```
 
-`value: null` means "Any" → no filter.
-
-```js
-// answers = { diet: 'Vegetarian', cuisine: null }
-let candidates = []
-if (answers.diet) candidates = await filterByCategory(answers.diet)
-else if (answers.cuisine) candidates = await filterByArea(answers.cuisine)
-
-const pick = candidates[Math.floor(Math.random() * candidates.length)]
-router.push({ name: 'recipe-detail', params: { id: pick.idMeal } })
-```
+`findMeals` handles the combination: both filters → intersect two lists, one filter →
+that list, none → `browseMeals()`.
 
 ## Gotchas
 
-- **v1 supports only one filter per request.** `filter.php?c=…&a=…` ignores the second one. Combine client-side if needed.
+- **v1 supports only one filter per request.** `filter.php?c=…&a=…` ignores the second one – `findMeals()` combines them client-side for you.
+- **Some areas return nothing in the free tier** (e.g. American, Indian, French → `meals: null`). Stick to the values in `questionOptions.js` or verify new ones in the browser first.
 - **No cooking time** in the data. The "15 minutes" idea needs another solution.
 - **Thumbnails:** append `/preview` to `strMealThumb` for a small image in lists.
 - **Valid filter values:** check with `listCategories()` / `listAreas()` – or open
