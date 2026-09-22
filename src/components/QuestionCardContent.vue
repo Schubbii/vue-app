@@ -1,21 +1,27 @@
-{
-  title: "Italian Cuisine",
-  image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRdDvE0dZY8P2bWSHV8kYN6KE__Bfc1XALG2YEoTnpHg&s=10"
-  description: "Pasta, pizza and gelato!"
-}
+<script setup>
+defineProps({
+  title: String,
+  image: String,
+  description: String,
+});
 
-{
-  title: "Mexican Cuisine",
-  image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVi-V8SMJfM4mBfnAXyL9HVfvvV8gtY0hjqgCoF1bamw&s=10
-  description:"Rice, noodles and spices!"
-}
+const emit = defineEmits(["select"]);
+</script>
 
+<template>
+  <div @click="emit('select')">
+    <BuildingBlockCard>
+      <template #image>
+        <img :src="image" :alt="title" />
+      </template>
 
-{
-  answer: "Meat",
-  answer: "Vegetarian",
-  answer: "Vegan"
+      <template #title>
+        {{ title }}
+      </template>
 
-}
-
-
+      <p>
+        {{ description }}
+      </p>
+    </BuildingBlockCard>
+  </div>
+</template>
