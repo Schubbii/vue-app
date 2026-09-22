@@ -14,10 +14,14 @@ export function getIngredients(meal) {
   return list
 }
 
-/** Splits strInstructions into single steps (at line breaks). */
+/**
+ * Splits strInstructions into single steps (at line breaks).
+ * Leading numbers like "2." or "3)" are stripped – some meals already
+ * contain them, which would double up with an <ol>.
+ */
 export function getInstructionSteps(meal) {
   return (meal.strInstructions ?? '')
     .split(/\r?\n+/)
-    .map((step) => step.trim())
+    .map((step) => step.trim().replace(/^\d+[.)]\s*/, ''))
     .filter((step) => step.length > 0)
 }
